@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>QingBai: Innocence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 0. GLOBAL SETTINGS --- */
+        :root {
+            --bg-color: #a4dcd3;
+            --text-light: #ffffff;
+            --text-dim: rgba(255,255,255,0.85);
+            --junzi-green: #4CB785; 
+            --support-brown: #6b4e3d;
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-blur: blur(15px);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: url('back.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; 
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            color: var(--text-light);
+            padding-bottom: 70px; 
+        }
+
+        /* --- 1. HERO LAYER --- */
+        #hero-layer {
+            position: relative;
+            width: 100%;
+            min-height: 95vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 80px;
+            overflow: hidden;
+            /* 关键：虽然背景不可点，但不能阻挡子元素 */
+            pointer-events: none; 
+        }
+
+        .poster-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            pointer-events: none; /* 容器本身不可点 */
+        }
+
+        /* 动画 */
+        .fade-up {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeUpAnim 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+
+        /* Logo */
+        .main-logo {
+            width: 260px; height: auto;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
+            z-index: 2; margin-bottom: 15px; animation-delay: 0.1s;
+        }
+
+        /* 排版 */
+        .typography-cluster {
+            display: flex; flex-direction: column; align-items: center;
+            position: relative; margin-bottom: 35px; animation-delay: 0.3s;
+        }
+        .big-title {
+            font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 700;
+            letter-spacing: 0.12em; line-height: 0.85; text-transform: uppercase;
+            color: rgba(255,255,255,0.95); text-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative; z-index: 1; margin-left: 10px;
+        }
+        .script-title {
+            font-family: 'Pinyon Script', cursive; font-size: 5rem; color: #ffffff;
+            margin-top: -45px; text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative; z-index: 3;
+        }
+        .subtitle-text {
+            font-family: 'Lato', sans-serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim);
+            margin-top: 25px; margin-bottom: 0;
+        }
+        .subtitle-text span { font-family: 'Playfair Display', serif; font-size: 0.9rem; }
+
+        /* 信息区 */
+        .info-cluster { animation-delay: 0.5s; display: flex; flex-direction: column; align-items: center; }
+        .quote-group {
+            display: flex; flex-direction: column; gap: 10px;
+            margin-bottom: 30px; opacity: 0.9; max-width: 90%;
+        }
+        .quote-en { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.02em; font-style: italic; }
+        .quote-cn { font-family: "Noto Sans SC", serif; font-size: 0.9rem; font-weight: 300; letter-spacing: 0.15em; }
+
+        /* --- 交互按钮系统 (Bug修复核心) --- */
+        .button-group {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 5px;
+            position: relative; 
+            z-index: 200; /* 确保层级最高 */
+            pointer-events: auto !important; /* 强制开启点击 */
+        }
+
+        .glass-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: 50px;
+            color: white; text-decoration: none;
+            font-family: 'Lato', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            pointer-events: auto !important; /* 强制按钮可点 */
+            user-select: none;
+        }
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25); transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.6); box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .glass-btn.special { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.5); }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            #hero-layer { padding-top: 60px; min-height: auto; height: auto; }
+            .poster-container { padding: 0 20px; }
+            .main-logo { width: 200px; }
+            .big-title { font-size: 3.5rem; letter-spacing: 0.1em; }
+            .script-title { font-size: 3.2rem; margin-top: -30px; }
+            .quote-en { font-size: 1rem; }
+            .button-group { gap: 10px; width: 100%; max-width: 400px; }
+            .glass-btn { flex: 1 1 auto; padding: 12px 15px; font-size: 0.65rem; white-space: nowrap;}
+        }
+
+        /* --- 2. DIGITAL PROGRAM --- */
+        #digital-program {
+            position: relative; z-index: 5;
+            margin-top: 100px; padding-bottom: 50px;
+            width: 100%; max-width: 900px; margin: 0 auto;
+            display: flex; flex-direction: column;
+            opacity: 0; transition: opacity 0.8s ease;
+            pointer-events: none; /* 没激活前不可点 */
+        }
+        #digital-program.active { opacity: 1; pointer-events: auto; }
+        .content-img { width: 100%; height: auto; display: block; margin-bottom: -1px; }
+
+        /* --- 3. FOOTER --- */
+        #footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
+            background: rgba(20, 60, 50, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 1000; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 30px; border-top: 1px solid rgba(255,255,255,0.1);
+            pointer-events: none; /* 让页脚不遮挡下方点击，如果需要点链接再开启 */
+        }
+        .footer-left, .footer-right { pointer-events: auto; /* 内容可点 */ }
+        .footer-left { font-family: 'Lato', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 2px; }
+        .footer-right { display: flex; align-items: center; gap: 10px; }
+        .supported-text { font-family: 'Lato', sans-serif; font-size: 0.6rem; font-weight: 700; color: var(--support-brown); }
+        .junzi-brand { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+        .junzi-en { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 1rem; color: var(--junzi-green); letter-spacing: 1px; }
+        .junzi-cn { font-family: "Noto Sans SC", sans-serif; font-size: 0.5rem; font-weight: 500; color: var(--junzi-green); letter-spacing: 2px; margin-top: 2px; }
+
+        /* 回到顶部 */
+        #back-to-top {
+            position: fixed; bottom: 80px; right: 20px; width: 45px; height: 45px;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 999;
+            opacity: 0; pointer-events: none; transition: all 0.3s ease;
+        }
+        #back-to-top.visible { opacity: 1; pointer-events: auto; }
+        #back-to-top svg { width: 20px; height: 20px; stroke-width: 2.5; }
+
+        /* --- 4. PHOTO BOOTH MODAL --- */
+        #photobooth-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(20, 60, 50, 0.95); backdrop-filter: blur(20px);
+            z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+        #photobooth-modal.active { opacity: 1; pointer-events: auto; }
+        
+        .pb-container { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        #canvas-wrapper {
+            width: 100%; aspect-ratio: 3 / 4; background: #000; border-radius: 12px; overflow: hidden;
+            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center;
+        }
+        #pb-canvas { width: 100%; height: 100%; object-fit: cover; }
+        #canvas-placeholder { position: absolute; color: rgba(255,255,255,0.5); font-family: 'Lato'; pointer-events: none; }
+        .pb-controls { display: flex; gap: 15px; width: 100%; justify-content: center;}
+        .close-pb { position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer; opacity: 0.7; z-index: 2001;}
+        #file-input { display: none; }
+
+        @media (max-width: 768px) {
+            #footer { padding: 0 20px; height: 50px; }
+            .footer-left { font-size: 1rem; }
+            .junzi-en { font-size: 0.9rem; } .junzi-cn { font-size: 0.4rem; }
+            #back-to-top { bottom: 70px; right: 15px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="hero-layer">
+        <div class="poster-container">
+            <img src="logo.jpg" class="main-logo fade-up" style="animation-delay: 0.1s;" alt="QingBai Logo">
+            <div class="typography-cluster fade-up" style="animation-delay: 0.2s;">
+                <div class="big-title">QING BAI</div>
+                <div class="script-title">Innocence</div>
+                <div class="subtitle-text">
+                    INSPIRED BY <span>THE LEGEND OF THE WHITE SNAKE</span>
+                </div>
+            </div>
+            <div class="info-cluster fade-up" style="animation-delay: 0.3s;">
+                <div class="quote-group">
+                    <div class="quote-en">When myth sheds its skin, it becomes movement.</div>
+                    <div class="quote-cn">当神话脱去皮肤，它成为了身体的运动。</div>
+                </div>
+
+                <div class="button-group">
+                    <a href="https://www.instagram.com/qingbai_innocence/?hl=en" target="_blank" class="glass-btn">
+                        Explore Instagram
+                    </a>
+                    <button id="open-pb-btn" class="glass-btn special">
+                        Photo Booth
+                    </button>
+                    <a href="#digital-program" id="view-program-btn" class="glass-btn">
+                        Digital Program
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="digital-program">
+        <img src="poster.jpg" class="content-img" alt="Main Poster">
+        <img src="intro.jpg" class="content-img">
+        <img src="cast.jpg" class="content-img">
+        <img src="photos.jpg" class="content-img">
+        <img src="credits.jpg" class="content-img">
+        <img src="sponsor.jpg" class="content-img">
+    </div>
+
+    <footer id="footer">
+        <div class="footer-left">HERE</div>
+        <div class="footer-right">
+            <span class="supported-text">supported by</span>
+            <div class="junzi-brand">
+                <span class="junzi-en">junzi</span>
+                <span class="junzi-cn">君子食堂</span>
+            </div>
+        </div>
+    </footer>
+
+    <div id="back-to-top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </div>
+
+    <div id="photobooth-modal">
+        <div id="close-pb" class="close-pb">&times;</div>
+        <div class="pb-container">
+            <div id="canvas-wrapper">
+                <div id="canvas-placeholder">Preview Area</div>
+                <canvas id="pb-canvas"></canvas>
+            </div>
+            <div class="pb-controls">
+                <button id="camera-btn" class="glass-btn special">
+                    Take Photo / Upload
+                </button>
+                <a id="save-btn" class="glass-btn" style="display: none;" download="qingbai-photo.png">
+                    Save Photo
+                </a>
+            </div>
+            <input type="file" id="file-input" accept="image/*">
+        </div>
+        <img id="frame-bg" src="back.jpg" style="display:none;" crossorigin="anonymous">
+        <img id="frame-logo" src="logo.jpg" style="display:none;" crossorigin="anonymous">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- 1. Navigation Logic ---
+            const programBtn = document.getElementById('view-program-btn');
+            const programSection = document.getElementById('digital-program');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            if (programBtn && programSection) {
+                programBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    programSection.classList.add('active'); // CSS opacity 1
+                    setTimeout(() => {
+                        programSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                });
+            }
+
+            // Back to Top Logic
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > window.innerHeight * 0.5) {
+                        backToTopBtn.classList.add('visible');
+                    } else {
+                        backToTopBtn.classList.remove('visible');
+                    }
+                });
+            }
+
+            // --- 2. Photo Booth Logic ---
+            const modal = document.getElementById('photobooth-modal');
+            const openBtn = document.getElementById('open-pb-btn');
+            const closeBtn = document.getElementById('close-pb');
+            const cameraBtn = document.getElementById('camera-btn');
+            const fileInput = document.getElementById('file-input');
+            const canvas = document.getElementById('pb-canvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+            const saveBtn = document.getElementById('save-btn');
+            const placeholder = document.getElementById('canvas-placeholder');
+            const bgImg = document.getElementById('frame-bg');
+            const logoImg = document.getElementById('frame-logo');
+
+            if (modal && openBtn && closeBtn && cameraBtn && fileInput && canvas) {
+                
+                openBtn.addEventListener('click', () => modal.classList.add('active'));
+                closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+                
+                cameraBtn.addEventListener('click', () => fileInput.click());
+
+                fileInput.addEventListener('change', function(e) {
+                    if (e.target.files && e.target.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const userImg = new Image();
+                            userImg.onload = function() {
+                                composeImage(userImg);
+                            };
+                            userImg.src = event.target.result;
+                        };
+                        reader.readAsDataURL(e.target.files[0]);
+                    }
+                });
+
+                function composeImage(userImg) {
+                    const w = 1200;
+                    const h = 1600;
+                    canvas.width = w;
+                    canvas.height = h;
+
+                    ctx.clearRect(0, 0, w, h);
+                    placeholder.style.display = 'none';
+
+                    // Draw BG
+                    drawCover(ctx, bgImg, w, h);
+
+                    // Draw Photo (Centered with margin)
+                    const margin = 60;
+                    const innerW = w - (margin * 2);
+                    const innerH = h - (margin * 2);
+                    
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.rect(margin, margin, innerW, innerH);
+                    ctx.clip();
+                    drawCover(ctx, userImg, innerW, innerH, margin, margin);
+                    ctx.restore();
+
+                    // Draw Logo
+                    if (logoImg) {
+                        const lw = 350;
+                        const lh = (logoImg.height / logoImg.width) * lw;
+                        // Add shadow
+                        ctx.shadowColor = "rgba(0,0,0,0.3)";
+                        ctx.shadowBlur = 20;
+                        ctx.drawImage(logoImg, w - lw - 50, 50, lw, lh);
+                        ctx.shadowBlur = 0;
+                    }
+
+                    // Show Save Button
+                    try {
+                        const dataUrl = canvas.toDataURL('image/png');
+                        saveBtn.href = dataUrl;
+                        saveBtn.style.display = 'inline-flex';
+                    } catch (err) {
+                        console.log('Canvas export error (likely cross-origin):', err);
+                    }
+                }
+
+                function drawCover(ctx, img, w, h, x = 0, y = 0) {
+                    if (!img) return;
+                    const imgRatio = img.width / img.height;
+                    const canvasRatio = w / h;
+                    let drawW, drawH, drawX, drawY;
+
+                    if (imgRatio > canvasRatio) {
+                        drawH = h; drawW = h * imgRatio;
+                        drawX = x + (w - drawW) / 2; drawY = y;
+                    } else {
+                        drawW = w; drawH = w / imgRatio;
+                        drawX = x; drawY = y + (h - drawH) / 2;
+                    }
+                    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
