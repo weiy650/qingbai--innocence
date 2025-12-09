@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>QingBai: Innocence</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
         :root {
             --junzi-green: #4CB785;
@@ -17,14 +14,10 @@
             --glass-border: rgba(255, 255, 255, 0.5);
             --text-main: #ffffff;
             --text-dim: rgba(255,255,255,0.9);
-            
-     
             --fate-paper-bg: #fffcf8;
             --fate-text: #2c2c2c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
         body {
             background-color: #a4dcd3; 
             background-image: url('back.jpg'); 
@@ -36,32 +29,24 @@
             color: var(--text-main); 
             padding-bottom: 70px;
         }
-
         body::before {
             content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.1); 
             pointer-events: none; z-index: -1;
         }
-
         #hero-layer { position: relative; width: 100%; min-height: 95vh; display: flex; justify-content: center; align-items: center; padding-top: 40px; padding-bottom: 80px; }
         .poster-container { position: relative; z-index: 10; width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        
         .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUpAnim 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
-        
         .main-logo { width: 260px; height: auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15)); z-index: 2; margin-bottom: 15px; animation-delay: 0.1s; }
-        
         .typography-cluster { display: flex; flex-direction: column; align-items: center; position: relative; margin-bottom: 35px; animation-delay: 0.3s; }
         .big-title { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 700; letter-spacing: 0.12em; line-height: 0.85; text-transform: uppercase; color: rgba(255,255,255,0.95); text-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; z-index: 1; margin-left: 10px; }
         .script-title { font-family: 'Pinyon Script', cursive; font-size: 5rem; color: #ffffff; margin-top: -45px; text-shadow: 0 10px 20px rgba(0,0,0,0.2); position: relative; z-index: 3; }
         .subtitle-text { font-family: 'Lato', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-top: 25px; }
-        
         .info-cluster { animation-delay: 0.5s; display: flex; flex-direction: column; align-items: center; }
         .quote-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; opacity: 0.9; max-width: 90%; }
         .quote-en { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.02em; font-style: italic; }
         .quote-cn { font-family: "Noto Serif SC", serif; font-size: 0.9rem; font-weight: 300; letter-spacing: 0.15em; }
-        
-      
         .button-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 5px; position: relative; z-index: 200; width: 100%; }
         .glass-btn { 
             display: inline-flex; align-items: center; justify-content: center; 
@@ -74,19 +59,20 @@
             cursor: pointer; user-select: none;
         }
         .glass-btn:hover { background: rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
-
         @media (max-width: 768px) {
             #hero-layer { padding-top: 60px; min-height: auto; }
             .poster-container { padding: 0 20px; }
             .main-logo { width: 200px; } .big-title { font-size: 3.5rem; letter-spacing: 0.1em; } .script-title { font-size: 3.2rem; margin-top: -30px; }
             .button-group { gap: 10px; width: 100%; max-width: 400px; } .glass-btn { flex: 1 1 auto; padding: 12px 15px; font-size: 0.65rem; white-space: nowrap;}
         }
-
-        #digital-program { position: relative; z-index: 5; margin-top: 50px; padding-bottom: 50px; width: 100%; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; }
+        #digital-program { 
+            display: none; 
+            position: relative; z-index: 5; margin-top: 50px; padding-bottom: 50px; 
+            width: 100%; max-width: 900px; margin: 0 auto; flex-direction: column; 
+        }
+        #digital-program.active { display: flex; } 
         .content-img { width: 100%; height: auto; display: block; margin-bottom: -1px; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
         .content-img.visible { opacity: 1; transform: translateY(0); }
-
-       
         .here-section { 
             padding: 70px 40px; margin: 40px 15px; 
             background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(20,60,50,0.4) 100%); 
@@ -96,106 +82,33 @@
             text-align: center; 
         }
         .here-section.visible { opacity: 1; transform: translateY(0); }
-        
         .here-pre-title { font-family: 'Lato', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
-        
         .here-header { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 35px; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.1; position: relative; display: inline-block; padding-bottom: 20px; }
         .here-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 2px; background: var(--here-gold); }
-        
-        .here-content { 
-            max-width: 700px; margin: 0 auto; 
-            text-align: justify; text-align-last: center; 
-        }
-        .here-content p { 
-            font-family: 'Lato', sans-serif; font-size: 0.95rem; line-height: 1.9; 
-            margin-bottom: 25px; color: rgba(255,255,255,0.9); font-weight: 300; 
-        }
+        .here-content { max-width: 700px; margin: 0 auto; text-align: justify; text-align-last: center; }
+        .here-content p { font-family: 'Lato', sans-serif; font-size: 0.95rem; line-height: 1.9; margin-bottom: 25px; color: rgba(255,255,255,0.9); font-weight: 300; }
         .here-highlight { color: var(--junzi-green); font-weight: 400; }
-        
-      
-        .here-links { 
-            display: flex; justify-content: center; gap: 40px; 
-            margin-top: 40px; padding-top: 35px; 
-            border-top: 1px solid rgba(255,255,255,0.15); 
-        }
-        .here-link-item { 
-            display: flex; flex-direction: column; align-items: center; gap: 12px; 
-            text-decoration: none; color: rgba(255,255,255,0.8); 
-            transition: all 0.3s ease; 
-        }
-        .here-link-item i {
-            font-size: 2rem; 
-            color: var(--here-gold); 
-            transition: all 0.3s ease;
-        }
-        .here-link-item span {
-            font-family: 'Lato'; font-size: 0.7rem; letter-spacing: 0.15em; font-weight: 700;
-        }
+        .here-links { display: flex; justify-content: center; gap: 40px; margin-top: 40px; padding-top: 35px; border-top: 1px solid rgba(255,255,255,0.15); }
+        .here-link-item { display: flex; flex-direction: column; align-items: center; gap: 12px; text-decoration: none; color: rgba(255,255,255,0.8); transition: all 0.3s ease; }
+        .here-link-item i { font-size: 2rem; color: var(--here-gold); transition: all 0.3s ease; }
+        .here-link-item span { font-family: 'Lato'; font-size: 0.7rem; letter-spacing: 0.15em; font-weight: 700; }
         .here-link-item:hover { transform: translateY(-5px); color: white; }
-        .here-link-item:hover i { 
-            color: white; 
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); 
-        }
-
-        
+        .here-link-item:hover i { color: white; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); }
         #footer { 
             position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; 
-            background: rgba(20, 30, 30, 0.5); /* 50% 透明度 */
-            backdrop-filter: blur(15px); z-index: 1000; 
+            background: rgba(20, 30, 30, 0.5); backdrop-filter: blur(15px); z-index: 1000; 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 0 30px; border-top: 1px solid rgba(255,255,255,0.1); 
         }
         .footer-left { font-family: 'Lato', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 2px; color: white; }
-        
         .footer-right { display: flex; align-items: center; gap: 10px; }
-        
-        
-        .supported-text { 
-            font-family: 'Lato', sans-serif; 
-            font-size: 0.5rem; 
-            font-weight: 700; 
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.6); /* 调暗颜色 */
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-        
+        .supported-text { font-family: 'Lato', sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; margin-top: 4px; }
         .junzi-brand { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
-        
-        
-        .junzi-en { 
-            font-family: 'Lato', sans-serif; 
-            font-weight: 700; 
-            font-size: 1.4rem; 
-            color: var(--junzi-green); 
-            letter-spacing: 0.5px; 
-        }
-        .junzi-cn { 
-            font-family: "Noto Sans SC", sans-serif; 
-            font-size: 0.65rem; /* 微调放大 */
-            font-weight: 500; 
-            color: var(--junzi-green); 
-            letter-spacing: 2px; 
-            margin-top: 1px; 
-        }
-        
-       
-        #back-to-top { 
-            position: fixed; bottom: 80px; right: 20px; 
-            width: 50px; height: 50px; 
-            background: var(--glass-bg); backdrop-filter: blur(10px); 
-            border: 1px solid var(--glass-border); border-radius: 50%; 
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; 
-            color: white; cursor: pointer; z-index: 999; 
-            opacity: 0; pointer-events: none; transition: all 0.3s ease; 
-            gap: 2px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
+        .junzi-en { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--junzi-green); letter-spacing: 0.5px; }
+        .junzi-cn { font-family: "Noto Sans SC", sans-serif; font-size: 0.65rem; font-weight: 500; color: var(--junzi-green); letter-spacing: 2px; margin-top: 1px; }
+        #back-to-top { position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 999; opacity: 0; pointer-events: none; transition: all 0.3s ease; gap: 2px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         #back-to-top.visible { opacity: 1; pointer-events: auto; }
         #back-to-top:hover { background: rgba(255,255,255,0.4); transform: translateY(-3px); }
-
-       
         #photobooth-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; visibility: hidden; background: rgba(10, 30, 25, 0.98); backdrop-filter: blur(20px); }
         #photobooth-modal.active { opacity: 1; pointer-events: auto; visibility: visible; }
         .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; opacity: 0.7; z-index: 2001; transition: opacity 0.3s; color: white; }
@@ -208,19 +121,15 @@
         .filter-btn.active { background: var(--junzi-green); border-color: var(--junzi-green); color: white; font-weight: bold; }
         .pb-controls { display: flex; flex-direction: column; gap: 10px; width: 100%; justify-content: center; align-items: center;}
         #file-input { display: none; }
-
-       
         #divination-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; 
+            z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
-            visibility: hidden;
-            background-color: #f0f2f0;
+            visibility: hidden; background-color: #f0f2f0;
         }
         #divination-modal.active { opacity: 1; pointer-events: auto; visibility: visible; }
         #divination-modal .close-modal { color: #555; mix-blend-mode: multiply; top: 30px; right: 30px; }
-
-        .shaker-container { display: flex; flex-direction: column; align-items: center; gap: 20px; transition: opacity 0.5s; z-index: 10; }
+        .shaker-container { display: flex; flex-direction: column; align-items: center; gap: 20px; transition: opacity 0.5s; z-index: 10; margin-top: 0; }
         .shaker-box {
             width: 110px; height: 200px;
             background: linear-gradient(90deg, #d0d0d0 0%, #f5f5f5 40%, #e0e0e0 100%);
@@ -232,12 +141,9 @@
         .shaker-box::after { content: "TAP TO DRAW"; position: absolute; bottom: -40px; font-family: 'Lato'; font-size: 0.6rem; letter-spacing: 3px; color: #999; }
         .shaking { animation: shakeAnim 0.5s cubic-bezier(.36,.07,.19,.97) both infinite; }
         @keyframes shakeAnim { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
-
-   
         .fortune-strip {
             position: relative;
-            width: 300px; max-width: 80vw; 
-            min-height: 580px; 
+            width: 300px; max-width: 80vw; min-height: 580px; 
             background-color: #fffcf8;
             background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' fill='transparent'/%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
             box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 2px 10px rgba(0,0,0,0.05);
@@ -248,93 +154,27 @@
             border-radius: 2px;
             user-select: none; -webkit-user-select: none;
         }
-        
         .fortune-strip.ready { display: flex; opacity: 1; transform: translateY(0); }
-
-        .strip-header { 
-            width: 100%; border-bottom: 1px solid rgba(0,0,0,0.06); 
-            padding-bottom: 25px; margin-bottom: 45px; 
-            display: flex; justify-content: center;
-        }
-        .strip-logo { 
-            font-family: 'Playfair Display'; font-weight: 700; font-style: italic;
-            font-size: 1.2rem; letter-spacing: 0.05em; color: #d4af37; 
-        }
-
-        .strip-content {
-            flex-grow: 1; display: flex; flex-direction: column; align-items: center; width: 100%;
-            filter: blur(12px); opacity: 0.1; 
-            transition: filter 2.5s ease-out, opacity 2.5s ease-out;
-            color: var(--fate-text);
-        }
+        .strip-header { width: 100%; border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 25px; margin-bottom: 45px; display: flex; justify-content: center; }
+        .strip-logo { font-family: 'Playfair Display'; font-weight: 700; font-style: italic; font-size: 1.2rem; letter-spacing: 0.05em; color: #d4af37; }
+        .strip-content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; width: 100%; filter: blur(12px); opacity: 0.1; transition: filter 2.5s ease-out, opacity 2.5s ease-out; color: var(--fate-text); }
         .fortune-strip.revealed .strip-content { filter: blur(0); opacity: 1; }
-
-        /* 文字排版 - 商业美学调整 */
-        .f-title {
-            font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700;
-            letter-spacing: 0.15em; color: #111; margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        
-        .f-subtitle {
-            /* 商业化中文调整 */
-            font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
-            font-size: 0.85rem; color: #999; 
-            margin-bottom: 45px; 
-            letter-spacing: 0.8em; 
-            font-weight: 300;
-            margin-left: 0.8em;
-        }
-        
-        .f-text-en {
-            font-family: 'Playfair Display', serif; font-size: 1.2rem; line-height: 1.5;
-            font-style: italic; color: #333; margin-bottom: 25px; max-width: 90%;
-        }
-        
-        .f-text-cn {
-            /* 商业化中文调整 */
-            font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif;
-            font-size: 0.95rem; 
-            line-height: 2.2; 
-            font-weight: 300; 
-            color: #555; 
-            letter-spacing: 0.15em; 
-            margin-top: 20px; 
-            border-top: 1px solid rgba(0,0,0,0.06); 
-            padding-top: 30px; 
-            width: 70%;
-        }
-
-        .reveal-hint {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 10; pointer-events: none;
-            transition: opacity 0.5s;
-        }
-        .reveal-hint span {
-            background: rgba(255,255,255,0.9); padding: 12px 25px;
-            font-family: 'Lato'; letter-spacing: 3px; font-size: 0.65rem; color: #aaa;
-            border: 1px solid rgba(0,0,0,0.1); border-radius: 40px; text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            animation: pulse 2.5s infinite;
-        }
+        .f-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.15em; color: #111; margin-bottom: 5px; text-transform: uppercase; }
+        .f-subtitle { font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif; font-size: 0.85rem; color: #999; margin-bottom: 45px; letter-spacing: 0.8em; font-weight: 300; margin-left: 0.8em; }
+        .f-text-en { font-family: 'Playfair Display', serif; font-size: 1.2rem; line-height: 1.5; font-style: italic; color: #333; margin-bottom: 25px; max-width: 90%; }
+        .f-text-cn { font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", serif; font-size: 0.95rem; line-height: 2.2; font-weight: 300; color: #555; letter-spacing: 0.15em; margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 30px; width: 70%; }
+        .reveal-hint { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; transition: opacity 0.5s; }
+        .reveal-hint span { background: rgba(255,255,255,0.9); padding: 12px 25px; font-family: 'Lato'; letter-spacing: 3px; font-size: 0.65rem; color: #aaa; border: 1px solid rgba(0,0,0,0.1); border-radius: 40px; text-transform: uppercase; box-shadow: 0 5px 15px rgba(0,0,0,0.05); animation: pulse 2.5s infinite; }
         .fortune-strip.revealing .reveal-hint { opacity: 0; }
         .fortune-strip.revealed .reveal-hint { display: none; }
         @keyframes pulse { 0% { opacity: 0.5; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1.02); } 100% { opacity: 0.5; transform: scale(0.98); } }
-
         .f-footer { margin-top: auto; font-family: 'Lato'; font-size: 0.5rem; letter-spacing: 2px; color: #ccc; margin-top: 40px; text-transform: uppercase; }
-
-        #redraw-btn { 
-            margin-top: 40px; opacity: 0; pointer-events: none; transition: opacity 0.5s; 
-            color: #555; border-color: #999; background: transparent; 
-        }
+        #redraw-btn { margin-top: 40px; opacity: 0; pointer-events: none; transition: opacity 0.5s; color: #555; border-color: #999; background: transparent; }
         #redraw-btn.visible { opacity: 1; pointer-events: auto; }
         #redraw-btn:hover { background: rgba(0,0,0,0.05); color: #000; }
-
     </style>
 </head>
 <body>
-
     <div id="hero-layer">
         <div class="poster-container">
             <img src="logo.jpg" class="main-logo fade-up" alt="QingBai Logo">
@@ -348,25 +188,15 @@
                     <div class="quote-en">When myth sheds its skin, it becomes movement.</div>
                     <div class="quote-cn">当神话脱去皮肤，它成为了身体的运动。</div>
                 </div>
-                
                 <div class="button-group">
-                    <a href="https://www.instagram.com/qingbai_innocence/?hl=en" target="_blank" class="glass-btn">
-                        EXPLORE INS
-                    </a>
-                    <button id="open-pb-btn" class="glass-btn special">
-                        PHOTO BOOTH
-                    </button>
-                    <button id="open-fate-btn" class="glass-btn">
-                        DRAW FATE
-                    </button>
-                    <a href="#digital-program" class="glass-btn">
-                        PROGRAM
-                    </a>
+                    <a href="https://www.instagram.com/qingbai_innocence/?hl=en" target="_blank" class="glass-btn">EXPLORE INS</a>
+                    <button id="open-pb-btn" class="glass-btn special">PHOTO BOOTH</button>
+                    <button id="open-fate-btn" class="glass-btn">DRAW FATE</button>
+                    <button id="program-btn" class="glass-btn">PROGRAM</button>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="digital-program">
         <img src="poster.jpg" class="content-img" alt="Main Poster">
         <img src="poster_new.jpg" class="content-img" alt="Feature">
@@ -374,7 +204,6 @@
         <img src="cast.jpg" class="content-img">
         <img src="photos.jpg" class="content-img">
         <img src="credits.jpg" class="content-img">
-
         <div class="here-section">
             <div class="here-pre-title">PROUDLY PRESENTED AT</div>
             <h2 class="here-header">HERE Arts Center</h2>
@@ -384,24 +213,13 @@
                 <p>We welcome curious audiences to witness the unfolding of new mythologies and experience art that is responsive to the world in which we live.</p>
             </div>
             <div class="here-links">
-                <a href="https://here.org" target="_blank" class="here-link-item">
-                    <i class="fas fa-globe"></i>
-                    <span>WEBSITE</span>
-                </a>
-                <a href="https://www.instagram.com/herearts/" target="_blank" class="here-link-item">
-                    <i class="fab fa-instagram"></i>
-                    <span>INSTAGRAM</span>
-                </a>
-                <a href="https://twitter.com/herearts" target="_blank" class="here-link-item">
-                    <i class="fab fa-x-twitter"></i>
-                    <span>TWITTER/X</span>
-                </a>
+                <a href="https://here.org" target="_blank" class="here-link-item"><i class="fas fa-globe"></i><span>WEBSITE</span></a>
+                <a href="https://www.instagram.com/herearts/" target="_blank" class="here-link-item"><i class="fab fa-instagram"></i><span>INSTAGRAM</span></a>
+                <a href="https://twitter.com/herearts" target="_blank" class="here-link-item"><i class="fab fa-x-twitter"></i><span>TWITTER/X</span></a>
             </div>
         </div>
-
         <img src="sponsor1.jpg" class="content-img" alt="Sponsors">
     </div>
-
     <footer id="footer">
         <div class="footer-left">HERE</div>
         <div class="footer-right">
@@ -409,12 +227,12 @@
             <div class="junzi-brand"><span class="junzi-en">junzi</span><span class="junzi-cn">君子食堂</span></div>
         </div>
     </footer>
-    
     <div id="back-to-top" onclick="window.scrollTo(0,0)">
         <i class="fas fa-chevron-up" style="font-size: 0.8rem; margin-top: -2px;"></i>
         <i class="fas fa-home" style="font-size: 0.6rem;"></i>
     </div>
-
+    <img id="frame-bg" src="back.jpg" style="display:none;" crossorigin="anonymous">
+    <img id="frame-logo" src="logo.jpg" style="display:none;" crossorigin="anonymous">
     <div id="photobooth-modal">
         <div id="close-pb" class="close-modal">&times;</div>
         <div class="pb-container">
@@ -431,58 +249,56 @@
             <div class="pb-controls">
                 <button id="camera-btn" class="glass-btn special" style="width: 80%;">Take Photo (1/4)</button>
                 <a id="save-btn" class="glass-btn" style="display: none; width: 80%;" download="qingbai-strip.png">Download Strip</a>
+                <button id="reset-pb-btn" class="glass-btn" style="display: none; width: 80%; border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7);">RETAKE</button>
             </div>
-            <input type="file" id="file-input" accept="image/*">
+            <input type="file" id="file-input" accept="image/*" capture="user">
         </div>
-        <img id="frame-bg" src="back.jpg" style="display:none;" crossorigin="anonymous">
-        <img id="frame-logo" src="logo.jpg" style="display:none;" crossorigin="anonymous">
     </div>
-
     <div id="divination-modal">
         <div id="close-fate" class="close-modal">&times;</div>
-        
         <div id="shaker-container" class="shaker-container">
             <div id="shaker-box" class="shaker-box">
                 <i class="fas fa-ellipsis-v" style="color:#aaa; font-size: 1.5rem;"></i>
             </div>
         </div>
-
         <div id="fortune-strip" class="fortune-strip">
             <div class="reveal-hint">
                 <span id="hint-text">Hold to Reveal</span>
             </div>
-            
             <div class="strip-header">
                 <div class="strip-logo">QingBai</div>
             </div>
-            
             <div class="strip-content">
                 <div class="f-title" id="f-title">INNOCENCE</div>
                 <div class="f-subtitle" id="f-subtitle">清白</div>
                 <div class="f-text-en" id="f-en">“Tonight, your name grows a second meaning.”</div>
                 <div class="f-text-cn" id="f-cn">今夜，你的名字悄悄换了另一层意思。<br>哪一层继续呼吸，由你决定。</div>
             </div>
-
             <div class="f-footer">
                 OLFACTORY MEMORY TEST No.<span id="f-num">01</span>
             </div>
         </div>
-
         <button id="redraw-btn" class="glass-btn">Draw Again</button>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
-            
             const backToTopBtn = document.getElementById('back-to-top');
             window.addEventListener('scroll', () => { backToTopBtn.classList.toggle('visible', window.scrollY > window.innerHeight * 0.5); });
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.content-img, .here-section').forEach(el => observer.observe(el));
-
-        
+            const programBtn = document.getElementById('program-btn');
+            const programSection = document.getElementById('digital-program');
+            if (programBtn) {
+                programBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    programSection.classList.add('active');
+                    setTimeout(() => {
+                        programSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                });
+            }
             const pbModal = document.getElementById('photobooth-modal');
             const openPbBtn = document.getElementById('open-pb-btn');
             const closePbBtn = document.getElementById('close-pb');
@@ -491,14 +307,15 @@
             const canvas = document.getElementById('pb-canvas');
             const ctx = canvas ? canvas.getContext('2d') : null;
             const saveBtn = document.getElementById('save-btn');
+            const resetPbBtn = document.getElementById('reset-pb-btn');
             const pbPlaceholder = document.getElementById('canvas-placeholder');
             const filterBtns = document.querySelectorAll('.filter-btn');
+            const frameBg = document.getElementById('frame-bg');
+            const frameLogo = document.getElementById('frame-logo');
             let capturedPhotos = [];
             let currentFilter = 'none';
-
             if(openPbBtn) openPbBtn.addEventListener('click', () => { resetPhotoBooth(); pbModal.classList.add('active'); });
             if(closePbBtn) closePbBtn.addEventListener('click', () => pbModal.classList.remove('active'));
-            
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
@@ -507,7 +324,6 @@
                     if (capturedPhotos.length > 0) composeStrip();
                 });
             });
-
             if(cameraBtn) {
                 cameraBtn.addEventListener('click', () => fileInput.click());
                 fileInput.addEventListener('change', (e) => {
@@ -523,34 +339,83 @@
                     }
                 });
             }
-
+            if(resetPbBtn) {
+                resetPbBtn.addEventListener('click', () => {
+                    resetPhotoBooth();
+                });
+            }
             function resetPhotoBooth() {
-                capturedPhotos = []; cameraBtn.style.display='inline-flex'; cameraBtn.disabled=false; cameraBtn.textContent='Take Photo (1/4)';
-                saveBtn.style.display='none'; pbPlaceholder.style.display='block'; if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
+                capturedPhotos = []; 
+                cameraBtn.style.display='inline-flex'; cameraBtn.disabled=false; cameraBtn.textContent='Take Photo (1/4)';
+                saveBtn.style.display='none'; 
+                resetPbBtn.style.display='none';
+                pbPlaceholder.style.display='block'; 
+                if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
             }
             function updateBooth() {
                 composeStrip();
+                if(capturedPhotos.length > 0) {
+                    resetPbBtn.style.display = 'inline-flex';
+                }
                 if(capturedPhotos.length < 4) {
-                    cameraBtn.textContent = `Take Photo (${capturedPhotos.length+1}/4)`; pbPlaceholder.style.display='none';
-                } else { cameraBtn.style.display='none'; }
+                    cameraBtn.textContent = `Take Photo (${capturedPhotos.length+1}/4)`; 
+                    pbPlaceholder.style.display='none';
+                } else { 
+                    cameraBtn.style.display='none'; 
+                }
             }
             function composeStrip() {
-                const w=800, h=2400, pad=50, size=600;
-                canvas.width=w; canvas.height=h;
-                ctx.fillStyle = "#fff"; ctx.fillRect(0,0,w,h); 
-                let y=pad;
+                const stripWidth = 800; 
+                const photoSize = 600; 
+                const padding = 50; 
+                const topMargin = 50;
+                const totalHeight = (photoSize * 4) + (padding * 5) + 300; 
+                canvas.width = stripWidth; 
+                canvas.height = totalHeight;
+                if (frameBg && frameBg.complete && frameBg.naturalHeight !== 0) {
+                    drawCover(ctx, frameBg, stripWidth, totalHeight, 0, 0);
+                } else {
+                    ctx.fillStyle = "#a4dcd3"; ctx.fillRect(0,0,stripWidth,totalHeight); 
+                }
+                let currentY = topMargin + padding;
                 capturedPhotos.forEach(photo => {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+                    ctx.shadowColor = "rgba(0,0,0,0.15)"; ctx.shadowBlur = 20;
+                    ctx.fillRect(padding, currentY, photoSize + (padding * 2), photoSize + (padding * 2));
+                    ctx.shadowBlur = 0;
+                    const drawX = padding + 20;
+                    const drawY = currentY + 20;
+                    const drawSize = photoSize + (padding * 2) - 40;
                     ctx.save();
+                    ctx.beginPath();
+                    ctx.rect(drawX, drawY, drawSize, drawSize);
+                    ctx.clip();
                     ctx.filter = getFilter(currentFilter);
-                    ctx.drawImage(photo, pad, y, size + pad, size + pad); 
+                    drawCover(ctx, photo, drawSize, drawSize, drawX, drawY);
                     ctx.restore();
-                    y += size + pad;
+                    currentY += photoSize + (padding * 2) + 40;
                 });
+                if (frameLogo && frameLogo.complete && frameLogo.naturalHeight !== 0) {
+                    const logoW = 200;
+                    const logoH = (frameLogo.naturalHeight / frameLogo.naturalWidth) * logoW;
+                    ctx.drawImage(frameLogo, stripWidth - logoW - 30, 30, logoW, logoH);
+                }
                 if(capturedPhotos.length===4) { saveBtn.href = canvas.toDataURL(); saveBtn.style.display='inline-flex'; }
             }
-            function getFilter(t) { return t==='noir'?'grayscale(1)' : t==='warm'?'sepia(0.4)' : t==='cool'?'hue-rotate(-10deg)' : 'none'; }
-
-
+            function drawCover(ctx, img, w, h, x, y) {
+                const imgRatio = img.width / img.height;
+                const canvasRatio = w / h;
+                let drawW, drawH, drawX, drawY;
+                if (imgRatio > canvasRatio) {
+                    drawH = h; drawW = h * imgRatio;
+                    drawX = x + (w - drawW) / 2; drawY = y;
+                } else {
+                    drawW = w; drawH = w / imgRatio;
+                    drawX = x; drawY = y + (h - drawH) / 2;
+                }
+                ctx.drawImage(img, drawX, drawY, drawW, drawH);
+            }
+            function getFilter(t) { return t==='noir'?'grayscale(1) contrast(1.1)' : t==='warm'?'sepia(0.3) contrast(1.05)' : t==='cool'?'hue-rotate(-10deg) contrast(1.1)' : 'none'; }
             const fateModal = document.getElementById('divination-modal');
             const openFateBtn = document.getElementById('open-fate-btn');
             const closeFateBtn = document.getElementById('close-fate');
@@ -559,8 +424,6 @@
             const fortuneStrip = document.getElementById('fortune-strip');
             const redrawBtn = document.getElementById('redraw-btn');
             const hintText = document.getElementById('hint-text');
-
-
             const fortunes = [
                 { k: "INNOCENCE", sub: "清白", en: "Tonight, your name gathers a second meaning.\nOnly you can decide which one lives.", cn: "今夜，你的名字悄悄换了另一层意思。\n哪一层继续呼吸，由你决定。" },
                 { k: "SKIN", sub: "皮", en: "Something beneath your skin is beginning to move.\nDon’t quiet it.", cn: "你的皮下正有东西慢慢苏醒。\n别压住它。" },
@@ -575,13 +438,10 @@
                 { k: "BRIDGE", sub: "桥", en: "You are closer to the crossing than you think.\nThe other side has already seen you.", cn: "你比想象中更接近那座桥。\n对岸的人早已看见你。" },
                 { k: "REBIRTH", sub: "重生", en: "You don’t have to remain the version that survived.\nAnother one is already waiting.", cn: "你不必继续做那个苟且活下来的自己。\n新的你已经在等。" }
             ];
-
             let holdTimer = null;
             let isRevealed = false;
-
             if(openFateBtn) openFateBtn.addEventListener('click', () => { resetFate(); fateModal.classList.add('active'); });
             if(closeFateBtn) closeFateBtn.addEventListener('click', () => fateModal.classList.remove('active'));
-
             function resetFate() {
                 shakerContainer.style.display = 'flex';
                 shakerBox.classList.remove('shaking');
@@ -591,25 +451,20 @@
                 isRevealed = false; 
                 clearTimeout(holdTimer);
             }
-
             shakerBox.addEventListener('click', function() {
-                if(navigator.vibrate) navigator.vibrate(50);
+                if(navigator.vibrate) navigator.vibrate([100, 30, 100, 30, 100, 30, 100]);
                 shakerBox.classList.add('shaking');
-                
                 setTimeout(() => {
                     const pick = fortunes[Math.floor(Math.random() * fortunes.length)];
                     const numStr = (fortunes.indexOf(pick) + 1).toString().padStart(2, '0');
-                    
                     document.getElementById('f-title').textContent = pick.k;
                     document.getElementById('f-subtitle').textContent = pick.sub;
                     document.getElementById('f-en').innerText = pick.en;
                     document.getElementById('f-cn').innerText = pick.cn;
                     document.getElementById('f-num').textContent = numStr;
-
                     shakerContainer.style.display = 'none';
                     shakerBox.classList.remove('shaking');
                     fortuneStrip.style.display = 'flex';
-                    
                     requestAnimationFrame(() => {
                         fortuneStrip.classList.add('ready');
                         const isTouch = ('ontouchstart' in window);
@@ -617,12 +472,10 @@
                     });
                 }, 1200);
             });
-
             const startReveal = (e) => {
                 if(isRevealed) return;
                 if(navigator.vibrate) navigator.vibrate(20); 
                 fortuneStrip.classList.add('revealing');
-                
                 holdTimer = setTimeout(() => {
                     fortuneStrip.classList.add('revealed');
                     if(navigator.vibrate) navigator.vibrate([30, 50, 30]);
@@ -630,21 +483,17 @@
                     redrawBtn.classList.add('visible');
                 }, 1500); 
             };
-
             const endReveal = (e) => {
                 if(isRevealed) return;
                 clearTimeout(holdTimer);
                 fortuneStrip.classList.remove('revealing');
             };
-
             fortuneStrip.addEventListener('touchstart', startReveal, {passive: true});
             fortuneStrip.addEventListener('touchend', endReveal);
             fortuneStrip.addEventListener('touchcancel', endReveal);
-            
             fortuneStrip.addEventListener('mousedown', startReveal);
             fortuneStrip.addEventListener('mouseup', endReveal);
             fortuneStrip.addEventListener('mouseleave', endReveal);
-
             redrawBtn.addEventListener('click', resetFate);
         });
     </script>
