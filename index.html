@@ -51,13 +51,13 @@
         .quote-en { font-family: 'Playfair Display', serif; font-size: 1.15rem; letter-spacing: 0.02em; font-style: italic; }
         .quote-cn { font-family: "Noto Serif SC", serif; font-size: 0.95rem; font-weight: 300; letter-spacing: 0.15em; }
         
-        /* --- Buttons (Fixed Z-Index & Interaction) --- */
+        /* Buttons */
         .button-group { 
             display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; 
             margin-top: 10px; 
             position: relative; 
-            z-index: 99999 !important; /* 强制最高层级 */
-            pointer-events: auto !important; /* 强制接收点击 */
+            z-index: 99999 !important; 
+            pointer-events: auto !important; 
         }
         .glass-btn { 
             display: inline-flex; align-items: center; justify-content: center; 
@@ -70,7 +70,7 @@
             font-family: 'Lato', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; 
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
             cursor: pointer; user-select: none;
-            position: relative; z-index: 100000; /* 按钮自身也要高 */
+            position: relative; z-index: 100000;
         }
         .glass-btn:hover { background: rgba(255, 255, 255, 0.35); transform: scale(1.02); border-color: rgba(255, 255, 255, 0.6); }
         .glass-btn:active { transform: scale(0.98); }
@@ -108,48 +108,60 @@
         .here-link-item span { font-family: 'Lato'; font-size: 0.65rem; letter-spacing: 0.2em; font-weight: 700; }
         .here-link-item:hover { transform: translateY(-3px); color: white; }
         .here-link-item:hover i { color: white; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); }
+
+        /* --- Junzi CTA Section (Updated Texture & Contrast) --- */
         .junzi-cta-section {
             width: 100%;
-            padding: 50px 30px;
             margin: 40px 0 60px 0;
+            padding: 60px 30px;
             text-align: center;
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
+            /* CHANGED: Reduced opacity for more texture, less "dead white" */
+            background: rgba(255, 255, 255, 0.65); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            /* CHANGED: Stronger border for better separation against background */
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 12px;
+            /* CHANGED: Deeper shadow for pop */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             opacity: 0; transform: translateY(30px); transition: all 1s ease-out;
         }
         .junzi-cta-section.visible { opacity: 1; transform: translateY(0); }
+        
         .junzi-desc {
             font-family: 'Lato', sans-serif;
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            font-weight: 300;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            letter-spacing: 0.08em;
+            color: #1d1d1f;
+            /* CHANGED: Increased font size */
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-top: 25px;
+            margin-bottom: 35px;
+            letter-spacing: 0.05em;
+            line-height: 1.6;
         }
         .junzi-btn {
             display: inline-block;
-            padding: 15px 45px;
+            /* CHANGED: Larger padding for a bolder button */
+            padding: 16px 50px;
             background-color: transparent;
             color: var(--junzi-green);
-            border: 1px solid var(--junzi-green);
+            border: 2px solid var(--junzi-green);
             text-decoration: none;
             font-family: 'Lato', sans-serif;
             font-weight: 700;
-            font-size: 0.75rem;
+            /* CHANGED: Larger font size */
+            font-size: 0.8rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             border-radius: 100px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .junzi-btn:hover { 
             background-color: var(--junzi-green); 
             color: white;
-            box-shadow: 0 5px 20px rgba(76, 183, 133, 0.3);
+            box-shadow: 0 5px 20px rgba(76, 183, 133, 0.4);
             transform: translateY(-2px);
         }
+
         #footer { 
             position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; 
             background: rgba(20, 30, 30, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; 
