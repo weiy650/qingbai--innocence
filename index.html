@@ -51,7 +51,6 @@
         .quote-en { font-family: 'Playfair Display', serif; font-size: 1.15rem; letter-spacing: 0.02em; font-style: italic; }
         .quote-cn { font-family: "Noto Serif SC", serif; font-size: 0.95rem; font-weight: 300; letter-spacing: 0.15em; }
         
-        /* Buttons */
         .button-group { 
             display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; 
             margin-top: 10px; 
@@ -180,25 +179,30 @@
             display: flex; flex-direction: column; align-items: center; 
             gap: 20px; height: 90vh; justify-content: center; 
         }
+        /* --- [FIXED] Force Full Image Display in Modal --- */
         #canvas-wrapper { 
             width: 100%; 
-            max-height: 75vh; 
+            /* Let it fit within the screen height but show the whole image */
+            height: auto; 
+            max-height: 80vh; /* Don't exceed screen height */
             background: #000; 
             border-radius: 2px; 
-            overflow-y: auto; 
-            overflow-x: hidden;
+            /* Remove scroll, let object-fit scale it */
+            overflow: hidden; 
             position: relative; 
             box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
-            display: flex; justify-content: center; align-items: flex-start; 
+            display: flex; justify-content: center; align-items: center;
         }
         #pb-canvas { 
-            width: 100%; 
-            height: auto;
-            object-fit: contain; 
+            width: auto;
+            height: 100%;
+            max-width: 100%; 
+            max-height: 100%;
+            object-fit: contain; /* Scale down to fit */
             will-change: transform, filter;
             transform: translateZ(0);
         }
-        #canvas-placeholder { position: absolute; color: rgba(255,255,255,0.5); font-family: 'Lato'; font-size: 0.9rem; pointer-events: none; text-align: center; top: 50%; width: 100%; font-weight: 300; letter-spacing: 1px;}
+        #canvas-placeholder { position: absolute; color: rgba(255,255,255,0.5); font-family: 'Lato'; font-size: 0.9rem; pointer-events: none; text-align: center; top: 50%; transform: translateY(-50%); width: 100%; font-weight: 300; letter-spacing: 1px;}
         
         .filter-buttons { display: flex; gap: 10px; justify-content: center; width: 100%; }
         .filter-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.8); font-size: 0.7rem; font-family: 'Lato'; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
@@ -206,12 +210,13 @@
         .pb-controls { display: flex; flex-direction: column; gap: 12px; width: 100%; justify-content: center; align-items: center;}
         #file-input { display: none; }
         
+        /* --- [FIXED] Mobile Layout for Shaker --- */
         #divination-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 2000; 
             display: flex; flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
+            justify-content: center; /* Vertical Center */
+            align-items: center; /* Horizontal Center */
             opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
             visibility: hidden; background-color: #f2f2f2;
         }
@@ -448,8 +453,6 @@
                     resetPhotoBooth();
                 });
             }
-            
-            // New Save Button Logic with Web Share API
             if(saveBtn) {
                 saveBtn.addEventListener('click', async (e) => {
                     e.preventDefault();
@@ -479,7 +482,6 @@
                     }, 'image/png');
                 });
             }
-
             function resetPhotoBooth() {
                 capturedPhotos = []; 
                 cameraBtn.style.display='inline-flex'; cameraBtn.disabled=false; cameraBtn.textContent='Take Photo (1/4)';
@@ -505,7 +507,8 @@
                 const photoSize = 600; 
                 const padding = 50; 
                 const topMargin = 50;
-                const totalHeight = (photoSize * 4) + (padding * 5) + 300; 
+                // [CRITICAL FIX] Recalculated exact height to match loop increments + borders
+                const totalHeight = 3100; 
                 canvas.width = stripWidth; 
                 canvas.height = totalHeight;
                 if (frameBg && frameBg.complete && frameBg.naturalHeight !== 0) {
@@ -513,15 +516,22 @@
                 } else {
                     ctx.fillStyle = "#a4dcd3"; ctx.fillRect(0,0,stripWidth,totalHeight); 
                 }
-                let currentY = topMargin + padding;
+                // [CRITICAL FIX] Reset step logic to align perfectly
+                const borderSize = photoSize + (padding * 2); // 700
+                const gap = 40; 
+                let currentY = topMargin + padding; // Starts at 100
+                
                 capturedPhotos.forEach(photo => {
                     ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
                     ctx.shadowColor = "rgba(0,0,0,0.15)"; ctx.shadowBlur = 20;
-                    ctx.fillRect(padding, currentY, photoSize + (padding * 2), photoSize + (padding * 2));
+                    // Draw Border
+                    ctx.fillRect(padding, currentY, borderSize, borderSize);
                     ctx.shadowBlur = 0;
+                    
+                    // Draw Image
                     const drawX = padding + 20;
                     const drawY = currentY + 20;
-                    const drawSize = photoSize + (padding * 2) - 40;
+                    const drawSize = borderSize - 40;
                     ctx.save();
                     ctx.beginPath();
                     ctx.rect(drawX, drawY, drawSize, drawSize);
@@ -529,7 +539,9 @@
                     ctx.filter = getFilter(currentFilter);
                     drawCover(ctx, photo, drawSize, drawSize, drawX, drawY);
                     ctx.restore();
-                    currentY += photoSize + (padding * 2) + 40;
+                    
+                    // Increment
+                    currentY += borderSize + gap;
                 });
                 if (frameLogo && frameLogo.complete && frameLogo.naturalHeight !== 0) {
                     const logoW = 200;
@@ -551,7 +563,7 @@
                 }
                 ctx.drawImage(img, drawX, drawY, drawW, drawH);
             }
-            function getFilter(t) { return t==='noir'?'grayscale(100%) contrast(110%)' : t==='warm'?'sepia(40%) contrast(105%) brightness(105%)' : t==='cool'?'hue-rotate(-15deg) contrast(105%) saturate(110%)' : 'none'; }
+            function getFilter(t) { return t==='noir'?'grayscale(100%)' : t==='warm'?'sepia(40%)' : t==='cool'?'hue-rotate(-20deg)' : 'none'; }
             const fateModal = document.getElementById('divination-modal');
             const openFateBtn = document.getElementById('open-fate-btn');
             const closeFateBtn = document.getElementById('close-fate');
